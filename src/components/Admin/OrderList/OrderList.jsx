@@ -24,7 +24,6 @@ const OrderList = () => {
   }, []);
 
   const handleUpdateStatus = (value, id) => {
-    console.log(value, id);
     fetch(`http://localhost:5000/updateStatus/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

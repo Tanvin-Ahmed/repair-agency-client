@@ -1,11 +1,10 @@
 import { faSignInAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./ManageCategory.css";
 
 const ManageCategory = ({ category, getAllCategory }) => {
-  const { pathname } = useLocation();
   const handleDeleteCategory = (category) => {
     fetch("http://localhost:5000/deleteCategory", {
       method: "DELETE",
@@ -22,7 +21,7 @@ const ManageCategory = ({ category, getAllCategory }) => {
       <div className="manage-category rounded my-2">
         {category}
         <div className="icon">
-          <Link to={`${pathname}/${category}`}>
+          <Link to={`/admin/manageService/${category?.split(" ")?.join("_")}`}>
             <button type="button" className="btn btn-outline-info">
               <FontAwesomeIcon className="edit-icon" icon={faSignInAlt} />
             </button>{" "}

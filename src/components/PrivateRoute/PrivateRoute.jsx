@@ -5,7 +5,7 @@ import { appContext } from "../../App";
 const PrivateRoute = ({ children }) => {
   const { loggedInUser } = useContext(appContext);
   const location = useLocation();
-  const auth = loggedInUser?.email || sessionStorage.getItem("user");
+  const auth = loggedInUser?.email || localStorage.getItem("user");
 
   return auth ? (
     children

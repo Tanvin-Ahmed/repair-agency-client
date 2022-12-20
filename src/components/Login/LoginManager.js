@@ -26,8 +26,10 @@ export const firebaseCreateUserWithEmailAndPassword = async (
       password
     );
     const user = userCredential.user;
+    console.log(user);
     const newUserInfo = { ...user };
     newUserInfo.displayName = name;
+    newUserInfo.email = email;
     newUserInfo.error = "";
     newUserInfo.success = true;
     await updateUserProfile(name);

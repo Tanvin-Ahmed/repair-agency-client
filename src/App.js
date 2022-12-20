@@ -1,10 +1,17 @@
 import { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import AddService from "./components/Admin/AddService/AddService";
 import Admin from "./components/Admin/Admin/Admin";
+import MakeAdmin from "./components/Admin/MakeAdmin/MakeAdmin";
+import ManageCategoryServiceList from "./components/Admin/ManageServices/ManageCategoryServiceList/ManageCategoryServiceList";
+import ManageService from "./components/Admin/ManageServices/ManageService/ManageService";
+import OrderList from "./components/Admin/OrderList/OrderList";
 import Home from "./components/Home/Home/Home";
 import ServiceList from "./components/Home/ServiceList/ServiceList";
 import Login from "./components/Login/Login";
+import Review from "./components/MyOrder/Review/Review";
+import UserOrderList from "./components/MyOrder/UserOrderList/UserOrderList";
 import UserPanel from "./components/MyOrder/UserPanel/UserPanel";
 import NoMatch from "./components/NoMatch/NoMatch";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -16,7 +23,10 @@ function App() {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
 
   useEffect(() => {
-    setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
+    const str = localStorage.getItem("user");
+    if (str) {
+      setLoggedInUser(JSON.parse(str));
+    }
   }, []);
 
   return (
@@ -33,7 +43,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services/:category" element={<ServiceList />} />
-
             <Route path="/login" element={<Login />} />
             <Route
               path="/admin"
@@ -42,7 +51,48 @@ function App() {
                   <Admin />
                 </PrivateRoute>
               }
-            />
+            >
+              <Route
+                index
+                element={
+                  <PrivateRoute>
+                    <OrderList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={`addService`}
+                element={
+                  <PrivateRoute>
+                    <AddService />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={`makeAdmin`}
+                element={
+                  <PrivateRoute>
+                    <MakeAdmin />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={`manageService`}
+                element={
+                  <PrivateRoute>
+                    <ManageService />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={`manageService/:category`}
+                element={
+                  <PrivateRoute>
+                    <ManageCategoryServiceList />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
             <Route
               path="/myOrder"
               element={
@@ -50,7 +100,24 @@ function App() {
                   <UserPanel />
                 </PrivateRoute>
               }
-            />
+            >
+              <Route
+                index
+                element={
+                  <PrivateRoute>
+                    <UserOrderList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={`/myOrder/review`}
+                element={
+                  <PrivateRoute>
+                    <Review />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>

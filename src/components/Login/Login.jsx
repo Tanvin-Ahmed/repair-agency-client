@@ -35,7 +35,7 @@ const Login = () => {
       email: res.email,
       displayName: res.displayName || user.name,
     };
-    sessionStorage.setItem("user", JSON.stringify(userInfo));
+    localStorage.setItem("user", JSON.stringify(userInfo));
     if (success) {
       navigate(from);
     } else {
@@ -100,7 +100,7 @@ const Login = () => {
         displayName: res.displayName,
         photoURL: res?.photoURL,
       };
-      sessionStorage.setItem("user", JSON.stringify(userInfo));
+      localStorage.setItem("user", JSON.stringify(userInfo));
       navigate(from);
     });
   };

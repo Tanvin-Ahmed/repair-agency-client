@@ -5,11 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./UserOrderSidebar.css";
 
 const OrderSidebar = () => {
-  const { pathname } = useLocation();
   return (
     <div className="order-sidebar">
       <Link className="home-link" to="/">
@@ -19,10 +18,10 @@ const OrderSidebar = () => {
         <h4>USER</h4>
       </div>
       <div className="link-list">
-        <Link className="sidebar-link" to={`${pathname}`}>
+        <Link className="sidebar-link" to={`/myOrder`}>
           <FontAwesomeIcon icon={faShoppingBasket} /> Order List
         </Link>
-        <Link className="sidebar-link" to={`${pathname}/review`}>
+        <Link className="sidebar-link" to={`/myOrder/review`}>
           <FontAwesomeIcon icon={faCommentDots} /> Review
         </Link>
       </div>

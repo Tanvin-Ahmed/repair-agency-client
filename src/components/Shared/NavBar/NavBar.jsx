@@ -11,19 +11,20 @@ const NavBar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogOut = () => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
     setLoggedInUser({});
     firebaseSignOut();
   };
 
   useEffect(() => {
+    if (!loggedInUser?.email) return;
     fetch(`http://localhost:5000/isAdmin/${loggedInUser?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setIsAdmin(data);
       })
       .catch((err) => console.log(err));
-  }, [isAdmin]);
+  }, [loggedInUser?.email]);
 
   return (
     <Navbar

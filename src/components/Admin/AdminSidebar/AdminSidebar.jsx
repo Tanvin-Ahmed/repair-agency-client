@@ -18,16 +18,16 @@ const AdminSidebar = () => {
       </Link>
       <h4 className="text-light">Admin Panel</h4>
       <div className="sidebar-container">
-        <Link className="sidebar-link" to="/admin">
+        <Link className="sidebar-link" to={"/admin"}>
           <FontAwesomeIcon icon={faShoppingBasket} /> Order List
         </Link>
-        <Link className="sidebar-link" to="/admin/addService">
+        <Link className="sidebar-link" to={`/admin/addService`}>
           <FontAwesomeIcon icon={faPlus} /> Add Service
         </Link>
-        <Link className="sidebar-link" to="/admin/makeAdmin">
+        <Link className="sidebar-link" to={`/admin/makeAdmin`}>
           <FontAwesomeIcon icon={faUserPlus} /> Make Admin
         </Link>
-        <Link className="sidebar-link" to="/admin/manageService">
+        <Link className="sidebar-link" to={`/admin/manageService`}>
           <FontAwesomeIcon icon={faThLarge} /> Manage Service
         </Link>
       </div>

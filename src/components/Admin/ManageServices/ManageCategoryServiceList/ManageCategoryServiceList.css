@@ -1,3 +1,15 @@
+.admin-manage-list {
+  margin-left: 12.8rem;
+  padding: 5rem;
+}
+
 .admin-manage-list .table tr:hover {
-    color: rgb(235, 235, 235) !important;
+  color: rgb(235, 235, 235) !important;
+}
+
+@media (max-width: 650px) {
+  .admin-manage-list {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
 }
