@@ -7,11 +7,8 @@ import "./Login.css";
 import {
   firebaseCreateUserWithEmailAndPassword,
   firebaseSignInWithEmailAndPassword,
-  initializationLoginFramework,
   signInWithGoogle,
 } from "./LoginManager";
-
-initializationLoginFramework();
 
 const Login = () => {
   const { setLoggedInUser, loadingSpinner, setLoadingSpinner } =
@@ -80,6 +77,7 @@ const Login = () => {
         user.email,
         user.password
       ).then((res) => {
+        console.log(res);
         handleResponse(res, res.success);
       });
     }

@@ -7,7 +7,7 @@ import "./ManageCategory.css";
 const ManageCategory = ({ category, getAllCategory }) => {
   const { pathname } = useLocation();
   const handleDeleteCategory = (category) => {
-    fetch("https://serene-caverns-03356.herokuapp.com/deleteCategory", {
+    fetch("http://localhost:5000/deleteCategory", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ category }),

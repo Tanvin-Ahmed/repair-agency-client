@@ -15,7 +15,7 @@ const ServiceList = () => {
 
   useEffect(() => {
     setLoadingSpinner(true);
-    fetch(`https://serene-caverns-03356.herokuapp.com/serviceItem/${category}`)
+    fetch(`http://localhost:5000/serviceItem/${category}`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);

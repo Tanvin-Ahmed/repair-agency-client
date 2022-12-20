@@ -11,10 +11,7 @@ import {
 } from "firebase/auth";
 import firebaseConfig from "./firebase.config";
 
-export const initializationLoginFramework = () => {
-  initializeApp(firebaseConfig);
-};
-const app = initializationLoginFramework();
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 export const firebaseCreateUserWithEmailAndPassword = async (

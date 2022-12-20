@@ -13,7 +13,7 @@ const ManageService = () => {
 
   const getAllCategory = () => {
     setLoadingSpinner(true);
-    fetch("https://serene-caverns-03356.herokuapp.com/getAllCategory")
+    fetch("http://localhost:5000/getAllCategory")
       .then((res) => res.json())
       .then((data) => {
         setAllCategory(data);

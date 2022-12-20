@@ -18,7 +18,7 @@ const Payment = () => {
 
   useEffect(() => {
     setLoadingSpinner(true);
-    fetch(`https://serene-caverns-03356.herokuapp.com/service/${id}`)
+    fetch(`http://localhost:5000/service/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setChosenItem(data);

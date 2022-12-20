@@ -17,9 +17,7 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    fetch(
-      `https://serene-caverns-03356.herokuapp.com/isAdmin/${loggedInUser?.email}`
-    )
+    fetch(`http://localhost:5000/isAdmin/${loggedInUser?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setIsAdmin(data);
