@@ -1,0 +1,18 @@
+.order-list {
+    margin-left: 12.8rem;
+    padding-top: 5rem;
+}
+.table-bg {
+    background-color: rgba(0, 54, 124, 0.02) !important;
+}
+@media (max-width:920px) {
+    .order-list {
+        overflow-x: scroll !important;
+    }
+}
+@media (max-width:650px){
+    .order-list {
+        margin-left: initial !important;
+        padding-top: 3rem;
+    }
+}

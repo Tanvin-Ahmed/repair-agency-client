@@ -1,0 +1,56 @@
+footer{
+    background-color: #002c5b;
+    color: white;
+    padding: 2rem;
+    margin-top: 0;
+}
+footer .i{
+    color: orangered;
+    margin-right: 0.5rem;
+}
+footer .part{
+    margin-top: 2rem;
+}
+footer .part .link{
+    display: inline-block;
+    margin:0 1rem;
+}
+footer .part img{
+    width: 30%;
+}
+footer .sub-part{
+    display: flex;
+    justify-content: baseline;
+    padding: 0.5rem 0;
+    align-items: center;
+}
+footer a{
+    text-decoration: none;
+    color: white;
+}
+footer .img-descript{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+footer .img-descript img{
+    margin-right: 0.5rem;
+}
+footer h1{
+    color: var(--orange-color);
+}
+footer button{
+    padding: 0.5rem 1.5rem;
+    border: 1px solid orangered;
+    background: none;
+    color: var(--orange-color);
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+footer button:hover{
+    background-color: orangered;
+    color: white;
+}

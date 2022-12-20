@@ -1,0 +1,15 @@
+.manage-category {
+    background-color: rgba(1, 43, 98, 0.719);
+    color: white;
+    padding: 0.4rem 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.edit-icon{
+    color: rgb(255, 255, 255);
+}
+.delete-icon{
+    color: rgb(255, 255, 255);
+}

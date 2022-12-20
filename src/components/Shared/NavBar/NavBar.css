@@ -1,0 +1,12 @@
+.nav-bg{
+    background-color: orangered;
+}
+.navLink-text{
+    color: white;
+    text-decoration: none !important;
+    font-weight: 400 !important;
+    margin-right: 0.7rem;
+}
+.navLink-text:hover{
+    color: wheat;
+}

@@ -1,0 +1,28 @@
+.client-header img{
+    width:6rem;
+    margin-right : 2rem;
+} 
+.client-header{
+    display: flex;
+    align-items:center;
+    margin-bottom: 1rem;
+}
+
+.client-opinion .part {
+   
+}
+.client-opinion .card {
+    padding: 1rem;
+    background-color: rgba(0, 110, 255, 0.027);
+    border-radius: 5px;
+    transition: all 0.5s !important;
+}
+.client-opinion .card p {
+    text-align: justify;
+}
+.client-opinion .card:hover {
+    box-shadow: 0px 0px 10px 5px rgba(0, 132, 255, 0.144);
+}
+.client-opinion .card .card-footer{
+    background-color: rgba(0, 110, 255, 0) !important;
+}

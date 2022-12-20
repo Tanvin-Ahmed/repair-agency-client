@@ -1,0 +1,41 @@
+.admin-sidebar{
+    background-color: rgb(1, 43, 98);
+    width: 13rem;
+    height: 100vh;
+    padding: 2rem;
+    position: fixed;
+}
+
+.admin-sidebar .sidebar-container{
+    display: flex;
+    flex-direction: column;
+}
+.admin-sidebar .sidebar-container .sidebar-link{
+    color: #fff !important;
+    margin: 0.5rem 0;
+    text-decoration: none;
+}
+.admin-sidebar .sidebar-container .sidebar-link:hover {
+    color: rgb(221, 221, 221) !important;
+}
+
+@media(max-width:650px) {
+    .admin-sidebar{
+        position: initial;
+        width: 100%;
+        height: initial;
+    }
+    .admin-sidebar .sidebar-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .admin-sidebar h4 {
+        text-align: center;
+    }
+    .admin-sidebar .sidebar-container .sidebar-link{
+        margin: 0.5rem;
+    }
+}

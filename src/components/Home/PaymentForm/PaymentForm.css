@@ -1,0 +1,8 @@
+.user-payment-btn {
+    border: 1px solid orangered !important;
+    transition: all 0.5s !important;
+}
+.user-payment-btn:hover {
+    background-color: orangered !important;
+    color: white !important;
+}

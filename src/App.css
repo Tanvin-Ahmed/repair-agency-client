@@ -1,0 +1,34 @@
+*{
+    scroll-behavior: smooth !important;
+}
+.App {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.header-color {
+    color: #002C5B;
+}
+.card-footer{
+    background-color: white !important;
+    border-top: none !important;
+}
+.pendingBg{
+    background-color: rgb(255, 192, 192) !important;
+}
+.pendingText {
+    color: rgb(255, 53, 53) !important;
+}
+.ongoingBg {
+    background-color: rgba(255, 217, 0, 0.198) !important;
+}
+.ongoingText{
+    color: rgb(255, 179, 0) !important;
+}
+.doneBg {
+    background-color: rgba(94, 255, 0, 0.157) !important;
+}
+.doneText{
+    color: rgb(5, 204, 71) !important;
+}

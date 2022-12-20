@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+.form-container{
+    width: 23rem;
+    text-align: center;
+    background-color:rgb(239, 239, 255);
+}
+
+form{
+    width: 100%;
+}
+.choose-btn{
+    padding: 0.2rem 2.7rem;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    background-color: rgb(239, 239, 255);
+}
+.disableBtn{
+    background-color: rgb(189, 189, 255);
+}
+.googleIcon{
+    width: 2rem;
+}

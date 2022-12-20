@@ -1,0 +1,9 @@
+.modal-btn{
+    border: 1px solid orangered;
+    background-color:none;
+    transition: all 0.5s !important;
+}
+.modal-btn:hover {
+    background-color: orangered;
+    color: white;
+}

@@ -1,0 +1,19 @@
+.experience{
+    margin-top: 6rem;
+    background-image: linear-gradient(to right, rgba(0, 38, 100, 0.842), rgba(0, 38, 100, 0.842)), url(../../../img/experence-bg/experence-bg.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 2rem;
+}
+
+.statistic .part {
+    background-color: rgb(0, 44, 91);
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+} 
+.statistic .part .icon .i{
+    font-size: 2.5rem;
+    color: orangered;
+}

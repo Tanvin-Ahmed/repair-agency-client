@@ -1,0 +1,10 @@
+.make-admin{
+    margin-left: 12.8rem;
+    padding: 5rem;
+}
+@media (max-width:650px) {
+    .make-admin{
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+}

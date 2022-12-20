@@ -1,0 +1,11 @@
+.payment {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+.payment .container{
+    background-color: rgba(255, 68, 0, 0.096);
+    padding: 2rem;
+}

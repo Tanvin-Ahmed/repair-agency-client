@@ -1,0 +1,18 @@
+.admin-btn{
+    padding: 0.5rem 2.5rem;
+    border: 1px solid orangered;
+    background: none;
+    color: #012B62;
+    font-weight: 500;
+    transition: all 0.5s !important;
+}
+
+.admin-btn:hover {
+    background-color: orangered;
+    color: #fff;
+}
+
+.admin-form {
+    padding: 1rem;
+    background-color: rgba(2, 11, 65, 0.082);
+}

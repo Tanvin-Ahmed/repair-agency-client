@@ -1,0 +1,16 @@
+.advertisement{
+    margin-top: 6rem;
+    background-color: #002C5B;
+    padding: 2rem;
+}
+.advertise-btn {
+    padding: 0.5rem 2rem;
+    background: none;
+    border: 1px solid white;
+    color: white;
+    transition: all 0.5s;
+}
+.advertise-btn:hover {
+    background-color: white;
+    color: #002C5B;
+}

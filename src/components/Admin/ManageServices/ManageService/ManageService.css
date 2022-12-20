@@ -1,0 +1,10 @@
+.manage-service{
+    margin-left:12.8rem;
+    padding: 5rem;
+}
+@media (max-width:650px) {
+    .manage-service{
+        margin-left:0;
+        padding: 1.5rem;
+    }
+}

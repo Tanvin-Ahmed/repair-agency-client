@@ -1,0 +1,49 @@
+.project-challenges {
+    margin-top: 6rem;
+    background-image: linear-gradient(to right, rgba(0, 0, 255, 0.247), rgba(0, 0, 255, 0.493)), url(../../../img/project-challenges/tool-library-640x426.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 5rem;
+}
+.project-challenges .row{
+    background-color: orangered;
+    padding: 2rem;
+    position: relative;
+}
+
+.project-challenges .row img{
+    width: 100%;
+}
+.project-challenges .row .part h1{
+    color: brand-color;
+}
+.project-challenges .row .part p {
+    color: white;
+}
+
+/* @media(max-width:1166px) {
+    .project .row .img{
+        position: initial;
+        max-width: initial;
+    }
+}*/
+@media(max-width:464px){
+    .project-challenges .row .part h1 {
+        font-size: 2rem;
+    }
+    .project-challenges .row{
+        padding: 1rem 0.2rem;
+    }
+}
+@media(max-width:434px){
+    .project-challenges{
+        padding:1rem;
+    }
+}
+@media(max-width:404px){
+    .project-challenges .row .part h1 {
+        font-size: 1.3rem;
+    }
+    
+}

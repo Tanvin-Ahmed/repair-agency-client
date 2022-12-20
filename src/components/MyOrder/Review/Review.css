@@ -1,0 +1,25 @@
+.review{
+    margin-left: 17rem;
+    padding-top: 5rem;
+}
+.review-form{
+    padding: 2rem;
+    background-color: rgba(255, 68, 0, 0.089);
+}
+.review-btn {
+    padding: 0.5rem 2rem;
+    background: none;
+    border: 1px solid orangered;
+    transition: all 0.5s;
+}
+.review-btn:hover {
+    background-color: orangered;
+    color: #fff;
+}
+
+@media (max-width:600px) {
+    .review{
+        margin-left: initial;
+        padding-top: 3rem;
+    }
+}

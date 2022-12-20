@@ -1,0 +1,17 @@
+.add-service {
+    margin-left: 12.8rem;
+    padding: 5rem;
+}
+
+#file {
+    display:none;
+}
+.img-btn {
+    cursor: pointer;
+}
+@media (max-width:650px) {
+    .add-service {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+}

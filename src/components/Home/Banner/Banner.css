@@ -1,0 +1,29 @@
+.banner {
+    height: 100vh;
+    background-image: linear-gradient(to right, rgba(10, 14, 63, 0.774), rgba(10, 14, 63, 0.589)), url(../../../img/banner/banner.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    padding-top: 7rem;
+}
+.banner-btn{
+    padding: 0.5rem 1.5rem;
+    background-color: rgba(38, 50, 107, 0.712);
+    border: 1px solid orangered;
+    color: white;
+    transition: all 0.5s;
+}
+.banner-btn:hover{
+    background-color: orangered;
+    /* padding: 0.5rem 2rem; */
+}
+.banner h1 {
+    font-size: 4rem;
+}
+
+@media (max-width: 424px) {
+    .banner h1 {
+        font-size: 2.5rem;
+    }
+}
