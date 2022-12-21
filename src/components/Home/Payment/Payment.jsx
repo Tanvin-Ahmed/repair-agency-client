@@ -7,9 +7,7 @@ import { appContext } from "../../../App";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./Payment.css";
 
-const stripePromise = loadStripe(
-  "pk_test_51IeC0ZDONHijbFR8TfUiYsgD8mSBdBFGuaElmBH5pf3Fcq48BdfCwHsaoOY2Bu37L5gJ0WKUTI4W329jYEw6IoFa00MyqcX5tN"
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Payment = () => {
   const { id } = useParams();

@@ -1,8 +1,9 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { appContext } from "../../../App";
+import { axiosInstance } from "../../../axiosInstance/axiosInstance";
 import "./PaymentForm.css";
 
 const PaymentForm = ({ chosenItem }) => {
@@ -12,6 +13,22 @@ const PaymentForm = ({ chosenItem }) => {
   const elements = useElements();
   const [paymentError, setPaymentError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(null);
+  const [clientSecrate, setClientSecrate] = useState("");
+
+  useEffect(() => {
+    if (!chosenItem?.fee) return;
+
+    axiosInstance
+      .post("/payment/create-payment-intent", {
+        price: chosenItem.fee,
+      })
+      .then(({ data }) => {
+        setClientSecrate(data.clientSecrate);
+      })
+      .catch((err) => console.log(err.message));
+  }, [chosenItem?.fee]);
+
+  console.log(clientSecrate);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +42,18 @@ const PaymentForm = ({ chosenItem }) => {
       card: cardElement,
     });
 
-    if (error) {
+    const { paymentIntent, error: confermError } =
+      await stripe.confirmCardPayment(clientSecrate, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: loggedInUser.displayName,
+            email: loggedInUser.email,
+          },
+        },
+      });
+
+    if (error || confermError) {
       setPaymentError(error.message);
       setPaymentSuccess(null);
     } else {
@@ -80,11 +108,26 @@ const PaymentForm = ({ chosenItem }) => {
           value={chosenItem?.serviceName}
           placeholder={"Service Name"}
         />
-        <CardElement />
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
+            },
+          }}
+        />
         <button
-          className="user-payment-btn form-control mt-4 mb-3"
+          className="form-control mt-4 mb-3"
           type="submit"
-          disabled={!stripe}
+          disabled={!stripe || !clientSecrate}
         >
           {loadingSpinner && (
             <Spinner animation="grow" variant="warning" size="sm" />
