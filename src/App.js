@@ -8,6 +8,8 @@ import ManageCategoryServiceList from "./components/Admin/ManageServices/ManageC
 import ManageService from "./components/Admin/ManageServices/ManageService/ManageService";
 import OrderList from "./components/Admin/OrderList/OrderList";
 import Home from "./components/Home/Home/Home";
+import Payment from "./components/Home/Payment/Payment";
+import ServiceItem from "./components/Home/ServiceItem/ServiceItem";
 import ServiceList from "./components/Home/ServiceList/ServiceList";
 import Login from "./components/Login/Login";
 import Review from "./components/MyOrder/Review/Review";
@@ -42,7 +44,18 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/services/:category" element={<ServiceList />} />
+            <Route path="/services/:category" element={<ServiceList />}>
+              <Route index element={<ServiceItem />} />
+              <Route
+                exact
+                path={`payment/:id`}
+                element={
+                  <PrivateRoute>
+                    <Payment />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
             <Route path="/login" element={<Login />} />
             <Route
               path="/admin"

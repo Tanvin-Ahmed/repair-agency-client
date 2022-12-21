@@ -66,16 +66,19 @@ const PaymentForm = ({ chosenItem }) => {
           type="text"
           className="form-control my-2"
           value={loggedInUser.displayName}
+          placeholder={"Name"}
         />
         <input
           type="email"
           className="form-control my-2"
           value={loggedInUser.email}
+          placeholder={"Email"}
         />
         <input
           type="text"
           className="form-control my-2"
           value={chosenItem?.serviceName}
+          placeholder={"Service Name"}
         />
         <CardElement />
         <button
