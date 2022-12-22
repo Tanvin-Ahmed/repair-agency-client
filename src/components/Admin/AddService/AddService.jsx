@@ -2,6 +2,8 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { getAllCategoriesName } from "../../../apis/categoryApis";
+import { createService } from "../../../apis/serviceApis";
 import { appContext } from "../../../context/UserContext";
 import "./AddService.css";
 
@@ -20,7 +22,7 @@ const AddService = () => {
     setFile(newFile);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data.selectedCategory === "" && data.addCategory === "") {
       alert("Select Category or Add new one");
     } else {
@@ -32,37 +34,24 @@ const AddService = () => {
       formData.append("description", data.description);
       formData.append("fee", data.fee);
 
-      fetch("http://localhost:5000/addService", {
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          alert("Service Added Successfully");
-          handleCategorySelect();
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("Fail to add service");
-        });
+      const { message, errorMessage } = await createService(formData);
+      await handleCategorySelect();
+
+      alert(message || errorMessage);
     }
+  };
+
+  const handleCategorySelect = async () => {
+    setLoadingSpinner(true);
+    const { categoriesName, errorMessage } = await getAllCategoriesName();
+    setLoadingSpinner(false);
+    setAllCategory(categoriesName);
+    errorMessage && alert(errorMessage);
   };
 
   useEffect(() => {
     handleCategorySelect();
   }, []);
-
-  const handleCategorySelect = () => {
-    setLoadingSpinner(true);
-    fetch("http://localhost:5000/getAllCategory")
-      .then((res) => res.json())
-      .then((data) => {
-        setAllCategory(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  };
 
   return (
     <div className="add-service">

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { getAllCategoriesName } from "../../../../apis/categoryApis";
 import { appContext } from "../../../../context/UserContext";
+import CustomAlert from "../../../Shared/CustomAlert/CustomAlert";
 
 import ManageCategory from "../ManageCategory/ManageCategory";
 import "./ManageService.css";
@@ -8,16 +10,14 @@ import "./ManageService.css";
 const ManageService = () => {
   const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
   const [allCategory, setAllCategory] = useState([]);
+  const [error, setError] = useState(null);
 
-  const getAllCategory = () => {
+  const getAllCategory = async () => {
     setLoadingSpinner(true);
-    fetch("http://localhost:5000/getAllCategory")
-      .then((res) => res.json())
-      .then((data) => {
-        setAllCategory(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
+    const { categoriesName, errorMessage } = await getAllCategoriesName();
+    !errorMessage && setAllCategory(categoriesName);
+    errorMessage && setError(errorMessage);
+    setLoadingSpinner(false);
   };
 
   useEffect(() => {
@@ -32,17 +32,21 @@ const ManageService = () => {
           <div className="loadingSpinner">
             <Spinner animation="border" variant="primary" />
           </div>
-        ) : (
+        ) : error ? (
+          <CustomAlert message={error} variant={"danger"} />
+        ) : allCategory.length > 0 ? (
           <div className="category">
             <h5 style={{ color: "orangered" }}>Manage Category</h5>
             {allCategory?.map((category) => (
               <ManageCategory
                 key={category._id}
                 category={category.category}
-                getAllCategory={getAllCategory}
+                setAllCategory={setAllCategory}
               />
             ))}
           </div>
+        ) : (
+          <CustomAlert message={"No Category Found!"} variant={"warning"} />
         )}
       </div>
     </div>

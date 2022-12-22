@@ -1,30 +1,35 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createAdmin } from "../../../apis/adminApis";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import "./MakeAmin.css";
 
 const MakeAdmin = () => {
   const [newAdmin, setNewAdmin] = useState("");
-  const handleSubmit = (e) => {
+  const [message, setMessage] = useState({});
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isValid = /\S+@\S+\.\S+/.test(e.target.value);
 
     if (isValid) {
-      fetch("http://localhost:5000/setAdmin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newAdmin }),
-      })
-        .then((res) => res.json())
-        .then((data) => alert("Add new Admin successfully"))
-        .catch((err) => alert("Admin was not created"));
-
+      const { message, errorMessage } = await createAdmin(newAdmin);
+      message && setMessage({ message, variant: "success" });
+      errorMessage && setMessage({ message: errorMessage, variant: "success" });
       setNewAdmin("");
     } else {
-      alert("Please Inter valid email and try again");
+      setMessage({
+        message: "Please Inter valid email and try again",
+        variant: "warning",
+      });
     }
   };
+
+  useEffect(() => {
+    setNewAdmin("");
+    setMessage({});
+  }, []);
 
   return (
     <div className="make-admin">
@@ -43,6 +48,14 @@ const MakeAdmin = () => {
           <button onClick={handleSubmit} className="admin-btn" type="submit">
             <FontAwesomeIcon icon={faPlus} /> Add
           </button>
+          <div className="mt-3">
+            {message.variant ? (
+              <CustomAlert
+                message={message?.message}
+                variant={message?.variant}
+              />
+            ) : null}
+          </div>
         </form>
       </div>
     </div>

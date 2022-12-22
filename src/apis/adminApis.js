@@ -1,11 +1,13 @@
 import axiosInstance from "./axiosInstance/axiosInstance";
 
-export const createService = async (info) => {
+export const createAdmin = async (email) => {
   try {
-    const { data } = await axiosInstance.post("/service/add", info);
-    const { message } = data;
+    const { data } = await axiosInstance.post("/admin/create", {
+      newAdmin: email,
+    });
+
     return {
-      message,
+      message: data.message,
       errorMessage: null,
     };
   } catch (error) {

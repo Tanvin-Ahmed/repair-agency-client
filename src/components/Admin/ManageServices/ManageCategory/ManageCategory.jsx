@@ -2,18 +2,18 @@ import { faSignInAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
+import { deleteCategory } from "../../../../apis/categoryApis";
 import "./ManageCategory.css";
 
-const ManageCategory = ({ category, getAllCategory }) => {
-  const handleDeleteCategory = (category) => {
-    fetch("http://localhost:5000/deleteCategory", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ category }),
-    })
-      .then((res) => res.json())
-      .then((data) => getAllCategory())
-      .catch((err) => console.log(err));
+const ManageCategory = ({ category, setAllCategory }) => {
+  const handleDeleteCategory = async (category) => {
+    const { message, errorMessage } = await deleteCategory(category);
+    if (message) {
+      setAllCategory((prev) => prev.filter((c) => c.category === category));
+    }
+    if (errorMessage) {
+      alert(errorMessage);
+    }
   };
 
   return (

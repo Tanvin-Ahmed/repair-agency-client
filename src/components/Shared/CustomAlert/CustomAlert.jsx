@@ -11,7 +11,7 @@ const title = {
 const CustomAlert = ({ variant, message }) => {
   return (
     <Alert variant={variant}>
-      <h2>{title[variant]}</h2>
+      <h4>{title[variant]}</h4>
       <p>{message}</p>
     </Alert>
   );
