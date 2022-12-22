@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { appContext } from "../../../../App";
+import { appContext } from "../../../../context/UserContext";
+
 import ManageCategory from "../ManageCategory/ManageCategory";
 import "./ManageService.css";
 

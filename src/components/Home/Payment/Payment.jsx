@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { appContext } from "../../../App";
+import { appContext } from "../../../context/UserContext";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./Payment.css";
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { appContext } from "../../../App";
+import { appContext } from "../../../context/UserContext";
 import "./Review.css";
 
 const Review = () => {

@@ -1,30 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { appContext } from "../../../App";
+import { appContext } from "../../../context/UserContext";
 import logo from "../../../img/logo/logo1.png";
+import { removeDataFromLS } from "../../../utils/LocalStorageDB";
 import { firebaseSignOut } from "../../Login/LoginManager";
 import "./NavBar.css";
 
 const NavBar = () => {
   const { loggedInUser, setLoggedInUser } = useContext(appContext);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogOut = () => {
-    localStorage.removeItem("user");
+    removeDataFromLS("user");
     setLoggedInUser({});
     firebaseSignOut();
   };
-
-  useEffect(() => {
-    if (!loggedInUser?.email) return;
-    fetch(`http://localhost:5000/isAdmin/${loggedInUser?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setIsAdmin(data);
-      })
-      .catch((err) => console.log(err));
-  }, [loggedInUser?.email]);
 
   return (
     <Navbar
@@ -56,7 +46,7 @@ const NavBar = () => {
                 MY ORDER
               </Link>
             </Nav.Link>
-            {isAdmin && (
+            {loggedInUser?.isAdmin && (
               <Nav.Link>
                 <Link className="navLink-text" to="/admin">
                   ADMIN

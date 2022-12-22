@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { appContext } from "../../App";
+import { checkToken } from "../../utils/checkToken";
 
 const PrivateRoute = ({ children }) => {
-  const { loggedInUser } = useContext(appContext);
   const location = useLocation();
-  const auth = loggedInUser?.email || localStorage.getItem("user");
+  const auth = checkToken();
 
   return auth ? (
     children

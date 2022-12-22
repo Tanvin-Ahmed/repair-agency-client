@@ -1,22 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { appContext } from "../../../App";
+import { getAllCategories } from "../../../apis/serviceApis";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
+
 import ServiceCategory from "../ServiceCategory/ServiceCategory";
 import "./Services.css";
 
 const Services = () => {
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     setLoadingSpinner(true);
-    fetch("http://localhost:5000/getAllCategory")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const allCategory = async () => {
+      const { categories, errorMessage } = await getAllCategories();
+      setCategories(categories);
+      setError(errorMessage);
+      setLoadingSpinner(false);
+    };
+
+    allCategory();
+  }, [setLoadingSpinner]);
   return (
     <section className="services">
       <div className="container">
@@ -28,12 +32,16 @@ const Services = () => {
           <div className="text-center">
             <Spinner animation="border" variant="primary" />
           </div>
-        ) : (
+        ) : error ? (
+          <CustomAlert variant={"danger"} message={error} />
+        ) : categories.length > 0 ? (
           <div className="row row-cols-1 row-cols-md-3 g-4">
             {categories.map((category) => (
               <ServiceCategory key={category._id} category={category} />
             ))}
           </div>
+        ) : (
+          <CustomAlert variant={"warning"} message={"No Category found!"} />
         )}
       </div>
     </section>

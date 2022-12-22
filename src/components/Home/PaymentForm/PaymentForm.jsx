@@ -2,8 +2,9 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { appContext } from "../../../App";
-import { axiosInstance } from "../../../axiosInstance/axiosInstance";
+import { generatePaymentClientSecrate } from "../../../apis/paymentApis";
+import { appContext } from "../../../context/UserContext";
+
 import "./PaymentForm.css";
 
 const PaymentForm = ({ chosenItem }) => {
@@ -18,17 +19,14 @@ const PaymentForm = ({ chosenItem }) => {
   useEffect(() => {
     if (!chosenItem?.fee) return;
 
-    axiosInstance
-      .post("/payment/create-payment-intent", {
-        price: chosenItem.fee,
-      })
-      .then(({ data }) => {
-        setClientSecrate(data.clientSecrate);
-      })
-      .catch((err) => console.log(err.message));
-  }, [chosenItem?.fee]);
+    const getclientSecrate = async () => {
+      const { clientSecrate, errorMessage } =
+        await generatePaymentClientSecrate(chosenItem?.fee);
+      !errorMessage && setClientSecrate(clientSecrate);
+    };
 
-  console.log(clientSecrate);
+    getclientSecrate();
+  }, [chosenItem?.fee]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

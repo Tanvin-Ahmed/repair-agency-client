@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { appContext } from "../../../../App";
+import { appContext } from "../../../../context/UserContext";
+
 import ServiceUpdateModal from "../ServiceUpdateModal/ServiceUpdateModal";
 import "./ManageCategoryServiceList.css";
 

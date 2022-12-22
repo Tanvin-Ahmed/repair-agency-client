@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { appContext } from "../../../App";
+import { appContext } from "../../../context/UserContext";
+
 import "./ServiceItem.css";
 
 const ServiceItem = () => {

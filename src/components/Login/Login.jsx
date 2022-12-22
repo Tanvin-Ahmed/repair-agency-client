@@ -1,8 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
-import { appContext } from "../../App";
+import { getToken } from "../../apis/userApis";
+import { appContext } from "../../context/UserContext";
 import googleIcon from "../../img/icon/google.png";
+import { getUserInfo } from "../../utils/getUserInfo";
+import { setDataInLS } from "../../utils/LocalStorageDB";
 import "./Login.css";
 import {
   firebaseCreateUserWithEmailAndPassword,
@@ -27,18 +30,28 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const handleResponse = (res, success) => {
-    setUser(res);
-    setLoggedInUser(res);
-    setLoadingSpinner(false);
-    const userInfo = {
-      email: res.email,
-      displayName: res.displayName || user.name,
-    };
-    localStorage.setItem("user", JSON.stringify(userInfo));
-    if (success) {
-      navigate(from);
-    } else {
+  const handleResponse = async (res, success) => {
+    try {
+      setUser(res);
+      setLoadingSpinner(false);
+
+      if (success) {
+        const data = {
+          email: res.email,
+          displayName: res.displayName || "",
+        };
+        const { token, errorMessage } = await getToken(data);
+        if (token) {
+          setDataInLS("user", token);
+          setLoggedInUser(getUserInfo());
+          navigate(from);
+        } else {
+          alert(errorMessage);
+        }
+      } else {
+        alert("Authentication fail!");
+      }
+    } catch (error) {
       alert("Authentication fail!");
     }
   };
@@ -77,7 +90,6 @@ const Login = () => {
         user.email,
         user.password
       ).then((res) => {
-        console.log(res);
         handleResponse(res, res.success);
       });
     }
