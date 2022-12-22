@@ -1,30 +1,38 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { updateService } from "../../../../apis/serviceApis";
 import "./ServiceUpdateModal.css";
 
-const ServiceUpdateModal = ({ chosenService, isUpdate, setIsUpdate }) => {
+const ServiceUpdateModal = ({ chosenService, setService }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     const item = {
       serviceName: data.serviceName,
       fee: data.fee,
       description: data.description,
     };
-    fetch(`http://localhost:5000/updateService/${chosenService._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(item),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsUpdate(!isUpdate);
-        alert("Update successfully");
-      })
-      .catch((err) => console.log(err));
+
+    const { service, errorMessage } = await updateService(
+      chosenService._id,
+      item
+    );
+
+    if (errorMessage) {
+      alert(errorMessage);
+    } else {
+      setService((prev) => {
+        const list = prev;
+        const index = list.findIndex((item) => item._id === service._id);
+        list.splice(index, 1, service);
+        return list;
+      });
+      alert("Update successfully");
+    }
   };
 
   return (

@@ -22,7 +22,6 @@ const ManageCategoryServiceList = () => {
   const { category } = useParams();
   const [services, setService] = useState([]);
   const [chosenService, setChosenService] = useState({});
-  const [isUpdate, setIsUpdate] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const ManageCategoryServiceList = () => {
       setLoadingSpinner(false);
     };
     getServiceItems();
-  }, [isUpdate, category, setLoadingSpinner]);
+  }, [category, setLoadingSpinner]);
 
   const handleDeleteServiceItem = async (id) => {
     const { message, errorMessage } = await deleteService(id);
@@ -62,8 +61,7 @@ const ManageCategoryServiceList = () => {
           <ServiceUpdateModal
             key={chosenService._id}
             chosenService={chosenService}
-            isUpdate={isUpdate}
-            setIsUpdate={setIsUpdate}
+            setService={setService}
           />
         </>
       ) : (

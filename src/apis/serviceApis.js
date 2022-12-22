@@ -33,6 +33,22 @@ export const getServicesOfSameCategory = async (category) => {
   }
 };
 
+export const updateService = async (id, info) => {
+  try {
+    const { data } = await axiosInstance.put(`/service/update/${id}`, info);
+
+    return {
+      service: data,
+      errorMessage: null,
+    };
+  } catch (error) {
+    return {
+      service: {},
+      errorMessage: error.response.data.message || error.message,
+    };
+  }
+};
+
 export const deleteService = async (id) => {
   try {
     const { data } = await axiosInstance.delete(
