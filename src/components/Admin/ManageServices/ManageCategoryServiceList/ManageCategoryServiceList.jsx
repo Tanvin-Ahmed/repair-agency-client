@@ -7,7 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import {
+  deleteService,
+  getServicesOfSameCategory,
+} from "../../../../apis/serviceApis";
 import { appContext } from "../../../../context/UserContext";
+import CustomAlert from "../../../Shared/CustomAlert/CustomAlert";
 
 import ServiceUpdateModal from "../ServiceUpdateModal/ServiceUpdateModal";
 import "./ManageCategoryServiceList.css";
@@ -18,34 +23,33 @@ const ManageCategoryServiceList = () => {
   const [services, setService] = useState([]);
   const [chosenService, setChosenService] = useState({});
   const [isUpdate, setIsUpdate] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setChosenService({});
   }, []);
 
-  const getServiceItems = () => {
-    setLoadingSpinner(true);
-    const cat = category.split("_").join(" ");
-    fetch(`http://localhost:5000/serviceItem/${cat}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setService(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  };
-
   useEffect(() => {
-    getServiceItems();
-  }, [isUpdate]);
+    const getServiceItems = async () => {
+      setLoadingSpinner(true);
 
-  const handleDeleteServiceItem = (id) => {
-    fetch(`http://localhost:5000/deleteServiceItem/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => getServiceItems())
-      .catch((err) => alert("Something is wrong. Please try again"));
+      const cat = category.split("_").join(" ");
+      const { services, errorMessage } = await getServicesOfSameCategory(cat);
+      setError(errorMessage);
+      setService(services);
+      setLoadingSpinner(false);
+    };
+    getServiceItems();
+  }, [isUpdate, category, setLoadingSpinner]);
+
+  const handleDeleteServiceItem = async (id) => {
+    const { message, errorMessage } = await deleteService(id);
+
+    if (errorMessage) {
+      alert(errorMessage);
+    } else {
+      setService((prev) => prev.filter((service) => service._id !== id));
+    }
   };
 
   return (
@@ -69,7 +73,9 @@ const ManageCategoryServiceList = () => {
             <div className="loadingSpinner">
               <Spinner animation="border" variant="primary" />
             </div>
-          ) : (
+          ) : error ? (
+            <CustomAlert message={error} variant={"danger"} />
+          ) : services.length > 0 ? (
             <table
               className="table text-light table-hover"
               style={{ background: "#49678E" }}
@@ -113,6 +119,8 @@ const ManageCategoryServiceList = () => {
                 ))}
               </tbody>
             </table>
+          ) : (
+            <CustomAlert message={"Services not found!"} variant={"warning"} />
           )}
         </>
       )}
