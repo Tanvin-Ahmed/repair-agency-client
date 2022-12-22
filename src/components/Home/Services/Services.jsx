@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { getAllCategories } from "../../../apis/serviceApis";
+import { getAllCategories } from "../../../apis/categoryApis";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
-
 import ServiceCategory from "../ServiceCategory/ServiceCategory";
 import "./Services.css";
 
@@ -10,6 +9,7 @@ const Services = () => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     setLoadingSpinner(true);
     const allCategory = async () => {
@@ -21,6 +21,7 @@ const Services = () => {
 
     allCategory();
   }, [setLoadingSpinner]);
+
   return (
     <section className="services">
       <div className="container">
