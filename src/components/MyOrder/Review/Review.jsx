@@ -1,27 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { addReview } from "../../../apis/reviewApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import "./Review.css";
 
 const Review = () => {
   const { loggedInUser } = useContext(appContext);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    setLoading(true);
     const newReview = { ...data };
     newReview.image = loggedInUser.photoURL;
 
-    fetch("http://localhost:5000/addReview", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ newReview }),
-    })
-      .then((response) => response.json())
-      .then((data) => alert("Thanks for Review"))
-      .catch((err) => alert("Something is wrong, please try again"));
+    const { message, errorMessage } = await addReview(newReview);
+    setMessage(message);
+    setError(errorMessage);
+    setLoading(false);
   };
   return (
     <div className="review">
@@ -63,6 +67,16 @@ const Review = () => {
             )}
             <br />
             <input type="submit" className="review-btn" />
+
+            <div className="mt-4">
+              {loading ? (
+                <Spinner animation="border" variant="primary" />
+              ) : error ? (
+                <CustomAlert message={error} variant={"danger"} />
+              ) : message ? (
+                <CustomAlert message={message} variant={"success"} />
+              ) : null}
+            </div>
           </form>
         </div>
       </div>
