@@ -1,40 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { getOrderList, updateOrderStatus } from "../../../apis/orderApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 
 import "./OrderList.css";
 
 const OrderList = () => {
   const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
   const [fullOrderList, setFullOrderList] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
-
-  const getFullOrderList = () => {
-    setLoadingSpinner(true);
-    fetch("http://localhost:5000/getFullOrderList")
-      .then((res) => res.json())
-      .then((data) => {
-        setFullOrderList(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  };
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getFullOrderList();
-  }, []);
+    const getFullOrderList = async () => {
+      setLoadingSpinner(true);
+      const { orderList, errorMessage } = await getOrderList();
+      setFullOrderList(orderList);
+      setLoadingSpinner(false);
+      setError(errorMessage);
+    };
 
-  const handleUpdateStatus = (value, id) => {
-    fetch(`http://localhost:5000/updateStatus/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ value }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        getFullOrderList();
-      })
-      .catch((err) => console.log(err));
+    getFullOrderList();
+  }, [setLoadingSpinner]);
+
+  const handleUpdateStatus = async (value, id) => {
+    const { order, errorMessage } = await updateOrderStatus(id, value);
+
+    if (errorMessage) {
+      alert(errorMessage);
+    } else {
+      setFullOrderList((prev) => {
+        const list = [...prev];
+        const index = list.indexOf((o) => o._id === id);
+        if (index !== -1) {
+          list.splice(index, 1, order);
+        }
+        return list;
+      });
+    }
   };
 
   return (
@@ -45,7 +48,9 @@ const OrderList = () => {
           <div className="loadingSpinner">
             <Spinner animation="border" variant="primary" />
           </div>
-        ) : (
+        ) : error ? (
+          <CustomAlert message={error} variant={"danger"} />
+        ) : fullOrderList.length > 0 ? (
           <table className="table table-bg table-hover">
             <thead>
               <tr>
@@ -128,6 +133,8 @@ const OrderList = () => {
               ))}
             </tbody>
           </table>
+        ) : (
+          <CustomAlert message={"No order found!"} variant={"warning"} />
         )}
       </div>
     </div>

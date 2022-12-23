@@ -3,7 +3,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { getServiceById } from "../../../apis/serviceApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./Payment.css";
 
@@ -13,17 +15,19 @@ const Payment = () => {
   const { id } = useParams();
   const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
   const [chosenItem, setChosenItem] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoadingSpinner(true);
-    fetch(`http://localhost:5000/service/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setChosenItem(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const getService = async () => {
+      setLoadingSpinner(true);
+      const { service, errorMessage } = await getServiceById(id);
+      setError(errorMessage);
+      setChosenItem(service);
+      setLoadingSpinner(false);
+    };
+
+    getService();
+  }, [id, setLoadingSpinner]);
 
   return (
     <div className="payment">
@@ -31,6 +35,8 @@ const Payment = () => {
         <div className="loadingSpinner">
           <Spinner animation="border" variant="primary" />
         </div>
+      ) : error ? (
+        <CustomAlert message={error} variant={"danger"} />
       ) : (
         <div className="container rounded">
           <h2 style={{ color: "orangered" }} className="text-center mb-3">

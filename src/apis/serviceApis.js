@@ -33,6 +33,21 @@ export const getServicesOfSameCategory = async (category) => {
   }
 };
 
+export const getServiceById = async (id) => {
+  try {
+    const { data } = await axiosInstance.get(`/service/${id}`);
+    return {
+      service: data,
+      errorMessage: null,
+    };
+  } catch (error) {
+    return {
+      service: {},
+      errorMessage: error.response.data.message || error.message,
+    };
+  }
+};
+
 export const updateService = async (id, info) => {
   try {
     const { data } = await axiosInstance.put(`/service/update/${id}`, info);
