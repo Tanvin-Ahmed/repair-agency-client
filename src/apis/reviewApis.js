@@ -5,7 +5,7 @@ export const getAllReviews = async () => {
     const { data } = await axiosInstance.get("/review/getAll");
 
     return {
-      reviews: data,
+      reviews: data || [],
       errorMessage: null,
     };
   } catch (error) {

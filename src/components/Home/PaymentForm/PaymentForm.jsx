@@ -8,13 +8,13 @@ import { appContext } from "../../../context/UserContext";
 import "./PaymentForm.css";
 
 const PaymentForm = ({ chosenItem }) => {
-  const { loggedInUser, loadingSpinner, setLoadingSpinner } =
-    useContext(appContext);
+  const { loggedInUser } = useContext(appContext);
   const stripe = useStripe();
   const elements = useElements();
   const [paymentError, setPaymentError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(null);
   const [clientSecrate, setClientSecrate] = useState("");
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
 
   useEffect(() => {
     if (!chosenItem?.fee) return;

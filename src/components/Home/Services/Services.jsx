@@ -11,8 +11,8 @@ const Services = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoadingSpinner(true);
     const allCategory = async () => {
+      setLoadingSpinner(true);
       const { categories, errorMessage } = await getAllCategories();
       setCategories(categories);
       setError(errorMessage);

@@ -80,7 +80,7 @@ const Testimonials = () => {
                 <TestimonialsBody key={review._id} review={review} />
               ))
             ) : (
-              <CustomAlert message={"Give 1st Review!"} variant={"Info"} />
+              <CustomAlert message={"Give 1st Review!"} variant={"info"} />
             )}
           </Slider>
         </div>

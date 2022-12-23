@@ -4,7 +4,7 @@ export const getAllCategories = async () => {
   try {
     const { data } = await axiosInstance.get("/category/all");
     return {
-      categories: data,
+      categories: data || [],
       errorMessage: null,
     };
   } catch (error) {
@@ -19,7 +19,7 @@ export const getAllCategoriesName = async () => {
   try {
     const { data } = await axiosInstance.get("/category/all-name");
     return {
-      categoriesName: data,
+      categoriesName: data || [],
       errorMessage: null,
     };
   } catch (error) {

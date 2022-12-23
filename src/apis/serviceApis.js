@@ -22,7 +22,7 @@ export const getServicesOfSameCategory = async (category) => {
       `/service/serviceItem/${category}`
     );
     return {
-      services: data,
+      services: data || [],
       errorMessage: null,
     };
   } catch (error) {

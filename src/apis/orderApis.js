@@ -5,7 +5,7 @@ export const getOrderList = async () => {
     const { data } = await axiosInstance.get("/order/getFullOrderList");
 
     return {
-      orderList: data,
+      orderList: data || [],
       errorMessage: null,
     };
   } catch (error) {
@@ -21,7 +21,7 @@ export const getUserOrderList = async (email) => {
     const { data } = await axiosInstance.get(`/order/userOrderList/${email}`);
 
     return {
-      orderList: data,
+      orderList: data || [],
       errorMessage: null,
     };
   } catch (error) {

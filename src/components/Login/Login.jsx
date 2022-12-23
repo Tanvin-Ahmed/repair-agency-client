@@ -14,11 +14,9 @@ import {
 } from "./LoginManager";
 
 const Login = () => {
-  const { setLoggedInUser, loadingSpinner, setLoadingSpinner } =
-    useContext(appContext);
-
+  const { setLoggedInUser } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [login, setLogin] = useState(true);
-
   const [user, setUser] = useState({
     name: "",
     email: "",

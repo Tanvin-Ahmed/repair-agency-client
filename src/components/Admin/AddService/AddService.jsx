@@ -1,14 +1,13 @@
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getAllCategoriesName } from "../../../apis/categoryApis";
 import { createService } from "../../../apis/serviceApis";
-import { appContext } from "../../../context/UserContext";
 import "./AddService.css";
 
 const AddService = () => {
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const {
     register,
     handleSubmit,

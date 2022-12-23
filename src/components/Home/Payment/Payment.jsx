@@ -1,10 +1,9 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getServiceById } from "../../../apis/serviceApis";
-import { appContext } from "../../../context/UserContext";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./Payment.css";
@@ -13,7 +12,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Payment = () => {
   const { id } = useParams();
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [chosenItem, setChosenItem] = useState({});
   const [error, setError] = useState(null);
 

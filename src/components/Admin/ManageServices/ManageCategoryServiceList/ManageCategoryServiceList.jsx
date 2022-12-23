@@ -4,21 +4,20 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import {
   deleteService,
   getServicesOfSameCategory,
 } from "../../../../apis/serviceApis";
-import { appContext } from "../../../../context/UserContext";
 import CustomAlert from "../../../Shared/CustomAlert/CustomAlert";
 
 import ServiceUpdateModal from "../ServiceUpdateModal/ServiceUpdateModal";
 import "./ManageCategoryServiceList.css";
 
 const ManageCategoryServiceList = () => {
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const { category } = useParams();
   const [services, setService] = useState([]);
   const [chosenService, setChosenService] = useState({});

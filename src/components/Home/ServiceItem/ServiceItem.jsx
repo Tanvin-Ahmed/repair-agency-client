@@ -1,16 +1,14 @@
 import { faConciergeBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { getServicesOfSameCategory } from "../../../apis/serviceApis";
-import { appContext } from "../../../context/UserContext";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
-
 import "./ServiceItem.css";
 
 const ServiceItem = () => {
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const { category } = useParams();
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);

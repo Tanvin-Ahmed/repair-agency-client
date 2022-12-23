@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { getOrderList, updateOrderStatus } from "../../../apis/orderApis";
-import { appContext } from "../../../context/UserContext";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 
 import "./OrderList.css";
 
 const OrderList = () => {
-  const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [fullOrderList, setFullOrderList] = useState([]);
   const [error, setError] = useState(null);
 
