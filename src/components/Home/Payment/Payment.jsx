@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getServiceById } from "../../../apis/serviceApis";
+import { getServiceByIdWithoutImg } from "../../../apis/serviceApis";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./Payment.css";
@@ -19,7 +19,7 @@ const Payment = () => {
   useEffect(() => {
     const getService = async () => {
       setLoadingSpinner(true);
-      const { service, errorMessage } = await getServiceById(id);
+      const { service, errorMessage } = await getServiceByIdWithoutImg(id);
       setError(errorMessage);
       setChosenItem(service);
       setLoadingSpinner(false);

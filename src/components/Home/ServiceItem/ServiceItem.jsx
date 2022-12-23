@@ -40,8 +40,8 @@ const ServiceItem = () => {
         <CustomAlert message={error} variant={"danger"} />
       ) : items.length > 0 ? (
         <div className="row row-cols-1 row-cols-md-3 g-4">
-          {items.map((item) => (
-            <div className="col my-3">
+          {items.map((item, index) => (
+            <div className="col my-3" key={index}>
               <div className="card card-hover-effect h-100">
                 <img
                   src={`data:image/png;base64,${item.image.img}`}

@@ -1,13 +1,18 @@
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { getAllCategoriesName } from "../../../apis/categoryApis";
 import { createService } from "../../../apis/serviceApis";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import "./AddService.css";
 
 const AddService = () => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
+  const [apiLoading, setApiLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const {
     register,
     handleSubmit,
@@ -33,10 +38,13 @@ const AddService = () => {
       formData.append("description", data.description);
       formData.append("fee", data.fee);
 
+      setApiLoading(true);
       const { message, errorMessage } = await createService(formData);
-      await handleCategorySelect();
+      setApiLoading(false);
+      setMessage(message);
+      setError(errorMessage);
 
-      alert(message || errorMessage);
+      await handleCategorySelect();
     }
   };
 
@@ -126,6 +134,16 @@ const AddService = () => {
           </div>
           <br />
           <input type="submit" value="Add" className="admin-btn" />
+
+          <div className="mt-4">
+            {apiLoading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : error ? (
+              <CustomAlert message={error} variant={"danger"} />
+            ) : message ? (
+              <CustomAlert message={message} variant={"success"} />
+            ) : null}
+          </div>
         </form>
       </div>
     </div>

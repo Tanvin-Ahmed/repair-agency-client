@@ -4,7 +4,6 @@ import { getDataFromLS } from "../../utils/LocalStorageDB";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5000",
-  timeout: 1500,
 });
 
 axiosInstance.interceptors.request.use(

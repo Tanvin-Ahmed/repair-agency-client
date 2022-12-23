@@ -20,7 +20,8 @@ const Review = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const newReview = { ...data };
-    newReview.image = loggedInUser.photoURL;
+    newReview.image = loggedInUser?.photoURL;
+    newReview.email = loggedInUser?.email;
 
     const { message, errorMessage } = await addReview(newReview);
     setMessage(message);
@@ -39,6 +40,7 @@ const Review = () => {
                   className="form-control my-2"
                   defaultValue={loggedInUser?.displayName}
                   {...register("name", { required: true })}
+                  placeholder="Name"
                 />
                 {errors.name && (
                   <span className="text-danger">This field is required</span>

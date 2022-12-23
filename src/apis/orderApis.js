@@ -49,3 +49,19 @@ export const updateOrderStatus = async (id, value) => {
     };
   }
 };
+
+export const placeOrder = async (orderInfo) => {
+  try {
+    const { data } = await axiosInstance.post("/order/placeOrder", orderInfo);
+
+    return {
+      order: data,
+      errorMessage: null,
+    };
+  } catch (error) {
+    return {
+      order: {},
+      errorMessage: error.response.data.message || error.message,
+    };
+  }
+};

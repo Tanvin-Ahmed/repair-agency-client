@@ -1,9 +1,10 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
+import { placeOrder } from "../../../apis/orderApis";
 import { generatePaymentClientSecrate } from "../../../apis/paymentApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 
 import "./PaymentForm.css";
 
@@ -22,6 +23,7 @@ const PaymentForm = ({ chosenItem }) => {
     const getclientSecrate = async () => {
       const { clientSecrate, errorMessage } =
         await generatePaymentClientSecrate(chosenItem?.fee);
+
       !errorMessage && setClientSecrate(clientSecrate);
     };
 
@@ -35,6 +37,9 @@ const PaymentForm = ({ chosenItem }) => {
       return;
     }
     const cardElement = elements.getElement(CardElement);
+
+    if (!cardElement) return;
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
@@ -70,15 +75,14 @@ const PaymentForm = ({ chosenItem }) => {
           date: new Date().toLocaleString(),
         };
         setLoadingSpinner(true);
-        axios
-          .post("http://localhost:5000/placeOrder", newOrder)
-          .then((data) => {
-            setPaymentSuccess(paymentMethod.id);
-            setLoadingSpinner(false);
-          })
-          .catch((err) =>
-            setPaymentError("Something went wrong, please try again")
-          );
+
+        const { order, errorMessage } = await placeOrder(newOrder);
+        if (errorMessage) {
+          setPaymentError("Something went wrong, please try again");
+        } else {
+          setPaymentSuccess(paymentMethod.id);
+          setLoadingSpinner(false);
+        }
       } else {
         alert("Choose service first");
       }
@@ -122,19 +126,25 @@ const PaymentForm = ({ chosenItem }) => {
             },
           }}
         />
-        <button
+        <Button
+          variant="warning"
           className="form-control mt-4 mb-3"
+          style={{ background: "orangered" }}
           type="submit"
-          disabled={!stripe || !clientSecrate}
+          disabled={!stripe || !clientSecrate || loadingSpinner}
         >
           {loadingSpinner && (
             <Spinner animation="grow" variant="warning" size="sm" />
           )}{" "}
           Pay {chosenItem?.fee}$
-        </button>
+        </Button>
       </form>
-      {paymentError && <p className="text-danger">{paymentError}</p>}
-      {paymentSuccess && <p className="text-success">Payment was successful</p>}
+      {paymentError && (
+        <CustomAlert message={paymentError} variant={"danger"} />
+      )}
+      {paymentSuccess && (
+        <CustomAlert message={"Payment was successful!"} variant={"success"} />
+      )}
     </div>
   );
 };

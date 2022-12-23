@@ -48,6 +48,23 @@ export const getServiceById = async (id) => {
   }
 };
 
+export const getServiceByIdWithoutImg = async (id) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/service/service-without-img/${id}`
+    );
+    return {
+      service: data,
+      errorMessage: null,
+    };
+  } catch (error) {
+    return {
+      service: {},
+      errorMessage: error.response.data.message || error.message,
+    };
+  }
+};
+
 export const updateService = async (id, info) => {
   try {
     const { data } = await axiosInstance.put(`/service/update/${id}`, info);

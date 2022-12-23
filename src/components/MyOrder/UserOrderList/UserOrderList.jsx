@@ -19,7 +19,6 @@ const OrderList = () => {
       const { orderList, errorMessage } = await getUserOrderList(
         loggedInUser?.email
       );
-      console.log(orderList, errorMessage);
       setUserOrder(orderList);
       setError(errorMessage);
       setLoadingSpinner(false);
