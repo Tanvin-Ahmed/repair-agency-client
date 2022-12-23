@@ -1,22 +1,31 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { getUserOrderList } from "../../../apis/orderApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import "./UserOrderList.css";
 
 const OrderList = () => {
-  const { loggedInUser, loadingSpinner, setLoadingSpinner } =
-    useContext(appContext);
+  const { loggedInUser } = useContext(appContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [userOrder, setUserOrder] = useState([]);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    setLoadingSpinner(true);
-    fetch(`http://localhost:5000/userOrderList/${loggedInUser?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUserOrder(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
-  }, [loggedInUser]);
+    if (!loggedInUser?.email) return;
+
+    const getOrders = async () => {
+      setLoadingSpinner(true);
+      const { orderList, errorMessage } = await getUserOrderList(
+        loggedInUser?.email
+      );
+      setUserOrder(orderList);
+      setError(errorMessage);
+      setLoadingSpinner(false);
+    };
+
+    getOrders();
+  }, [loggedInUser?.email]);
 
   return (
     <div className="order-list">
@@ -27,7 +36,9 @@ const OrderList = () => {
             <div className="loadingSpinner">
               <Spinner animation="border" variant="primary" />
             </div>
-          ) : (
+          ) : error ? (
+            <CustomAlert message={error} variant={"danger"} />
+          ) : userOrder.length > 0 ? (
             <div className="row row-cols-1 row-cols-md-3 g-4">
               {userOrder.map((order) => (
                 <div className="col my-2">
@@ -63,6 +74,8 @@ const OrderList = () => {
                 </div>
               ))}
             </div>
+          ) : (
+            <CustomAlert message={"No order available!"} variant={"info"} />
           )}
         </div>
       </div>

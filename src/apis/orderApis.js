@@ -16,6 +16,22 @@ export const getOrderList = async () => {
   }
 };
 
+export const getUserOrderList = async (email) => {
+  try {
+    const { data } = await axiosInstance.get(`/order/userOrderList/${email}`);
+
+    return {
+      orderList: data,
+      errorMessage: null,
+    };
+  } catch (error) {
+    return {
+      orderList: [],
+      errorMessage: error.response.data.message || error.message,
+    };
+  }
+};
+
 export const updateOrderStatus = async (id, value) => {
   try {
     const { data } = await axiosInstance.put(`/order/updateStatus/${id}`, {
