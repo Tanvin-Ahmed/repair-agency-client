@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { getServicesOfSameCategory } from "../../../apis/serviceApis";
 import { appContext } from "../../../context/UserContext";
+import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 
 import "./ServiceItem.css";
 
@@ -11,18 +13,22 @@ const ServiceItem = () => {
   const { loadingSpinner, setLoadingSpinner } = useContext(appContext);
   const { category } = useParams();
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!category) return;
 
-    setLoadingSpinner(true);
-    fetch(`http://localhost:5000/serviceItem/${category}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setLoadingSpinner(false);
-      })
-      .catch((err) => console.log(err));
+    const getServices = async () => {
+      setLoadingSpinner(true);
+      const { services, errorMessage } = await getServicesOfSameCategory(
+        category
+      );
+      setItems(services);
+      setError(errorMessage);
+      setLoadingSpinner(false);
+    };
+
+    getServices();
   }, [category, setLoadingSpinner]);
 
   return (
@@ -32,7 +38,9 @@ const ServiceItem = () => {
         <div className="loadingSpinner">
           <Spinner animation="border" variant="primary" />
         </div>
-      ) : (
+      ) : error ? (
+        <CustomAlert message={error} variant={"danger"} />
+      ) : items.length > 0 ? (
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {items.map((item) => (
             <div class="col my-3">
@@ -66,6 +74,8 @@ const ServiceItem = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <CustomAlert message={"No service available!"} variant={"warning"} />
       )}
     </div>
   );
