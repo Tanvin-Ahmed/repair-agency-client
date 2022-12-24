@@ -32,7 +32,7 @@ const OrderList = () => {
         const list = [...prev];
         const index = list.indexOf((o) => o._id === id);
         if (index !== -1) {
-          list.splice(index, 1, order);
+          list[index] = order;
         }
         return list;
       });

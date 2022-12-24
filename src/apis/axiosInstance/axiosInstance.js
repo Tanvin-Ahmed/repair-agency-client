@@ -3,7 +3,7 @@ import { checkTokenSyntax } from "../../utils/getUserInfo";
 import { getDataFromLS } from "../../utils/LocalStorageDB";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://repair-agency-server.vercel.app",
 });
 
 axiosInstance.interceptors.request.use(
