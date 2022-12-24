@@ -1,23 +1,34 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { createAdmin } from "../../../apis/adminApis";
 import CustomAlert from "../../Shared/CustomAlert/CustomAlert";
 import "./MakeAmin.css";
 
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 const MakeAdmin = () => {
   const [newAdmin, setNewAdmin] = useState("");
   const [message, setMessage] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isValid = /\S+@\S+\.\S+/.test(e.target.value);
-
-    if (isValid) {
+    if (validateEmail(newAdmin)) {
+      setLoading(true);
       const { message, errorMessage } = await createAdmin(newAdmin);
       message && setMessage({ message, variant: "success" });
       errorMessage && setMessage({ message: errorMessage, variant: "success" });
       setNewAdmin("");
+      setLoading(false);
     } else {
       setMessage({
         message: "Please Inter valid email and try again",
@@ -44,12 +55,15 @@ const MakeAdmin = () => {
             type="email"
             placeholder="Email"
             style={{ color: "#012B62" }}
+            required
           />
           <button onClick={handleSubmit} className="admin-btn" type="submit">
             <FontAwesomeIcon icon={faPlus} /> Add
           </button>
           <div className="mt-3">
-            {message.variant ? (
+            {loading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : message.variant ? (
               <CustomAlert
                 message={message?.message}
                 variant={message?.variant}
